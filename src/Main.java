@@ -12,28 +12,38 @@ public class Main {
 		Graph citations = new Graph();
 		ArrayList<Node> reachedWords = new ArrayList<Node>();
 		ArrayList<String> etymons = new ArrayList<String>();
-		BufferedReader br = new BufferedReader(new FileReader("scientist.txt"));
+		BufferedReader br = new BufferedReader(new FileReader("teszt1.txt"));
 		String line;
 		String parsed[];
+		String splitted[];
 		int id = 0;
 		boolean duplicate = false;
 		
 		//Szotovek felvetel
 		while ((line = br.readLine()) != null) {
 			line = line.toLowerCase();
-			parsed = line.split(" ");
+			parsed = line.split("=");
+			//System.out.println(parsed[1]);
 			etymons.add(parsed[0]);
 			
 		}
 		br.close();
-		
+		System.out.println("Etymons: OK - levalasztva");
+
 		//Node-ok letrehozasa
-		br = new BufferedReader(new FileReader("scientist.txt"));
-		
+		br = new BufferedReader(new FileReader("teszt1.txt"));
+		int counter = 0;
 		while ((line = br.readLine()) != null) {
+			System.out.println(counter++);
 			line = line.toLowerCase();
 			parsed = line.split(" ");
 
+			/*
+			for (int i = 0; i < parsed.length; i++){
+				System.out.println(i + ": " + parsed[i]);
+			}
+			*/
+			
 			for (int i = 0; i < parsed.length; i++) {
 				duplicate = false;
 				for (int j = 0; j < citations.nodes.size(); j++) {
@@ -48,6 +58,8 @@ public class Main {
 					}
 					else {
 						String simplierWord = null;
+						//Magyarazo szavak vizsgalata
+						//Itt lehetne szűrni a {, főnév, *jpg dolgokat
 						for(int l = 1; l < parsed[i].length(); l++){
 							simplierWord = null;
 							for(int k = 0; k < etymons.size(); k++){
@@ -57,7 +69,7 @@ public class Main {
 							}
 						}
 						//Ezen a ponton simplierWord a legjobban hasonlito szot tartalmazza
-						System.out.println("simplierWord: " + simplierWord);
+						//System.out.println("simplierWord: " + simplierWord);
 						if(simplierWord != null){
 							node.label = simplierWord;
 							parsed[i] = simplierWord;
@@ -76,16 +88,17 @@ public class Main {
 
 		}
 		br.close();
-
 		
 		for (int i = 0; i < citations.nodes.size(); i++) {
 			// System.out.println(citations.nodes.get(i).label);
 			for (int j = 0; j < citations.nodes.get(i).ishowTo.size(); j++) {
-				System.out
-						.println((citations.nodes.get(i).ishowTo).get(j).label);
+				System.out.println((citations.nodes.get(i).ishowTo).get(j).label);
 			}
 		}
-
+		System.out.println("Node-ok letrehozasa: OK");
+		System.out.println("Kapcsolatok letrehozasa: OK");
+		
+		System.out.println("Graf bejarasa megkezdodott.");
 		//Graf bejarasanak elkezdese
 		citations.setRootNode(citations.nodes.get(0));
 		reachedWords.add(citations.nodes.get(0));
@@ -101,7 +114,8 @@ public class Main {
 		}
 
 		output.close();
-		
+		System.out.println("Graf bejarasa: OK");
+
 		//Elert szavak fajlba irasa
 		Writer words = new BufferedWriter(new FileWriter("words.txt", false));
 		for (int i = 0; i < reachedWords.size(); i++) {
@@ -110,7 +124,7 @@ public class Main {
 		}
 		words.close();
 		
-		System.out.println("showToMe.size(): " + citations.getNode("hordozó").showToMe.size());
+		//System.out.println("showToMe.size(): " + citations.getNode("hordozo").showToMe.size());
 		// Bejaras
 
 		// for(int i=0; i < citations.nodes.size(); i++){
