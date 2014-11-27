@@ -12,7 +12,7 @@ public class Main {
 		Graph citations = new Graph();
 		ArrayList<Node> reachedWords = new ArrayList<Node>();
 		ArrayList<String> etymons = new ArrayList<String>();
-		BufferedReader br = new BufferedReader(new FileReader("teszt1.txt"));
+		BufferedReader br = new BufferedReader(new FileReader("scientist.txt"));
 		String line;
 		String parsed[];
 		String splitted[];
@@ -31,7 +31,7 @@ public class Main {
 		System.out.println("Etymons: OK - levalasztva");
 
 		//Node-ok letrehozasa
-		br = new BufferedReader(new FileReader("teszt1.txt"));
+		br = new BufferedReader(new FileReader("scientist.txt"));
 		int counter = 0;
 		while ((line = br.readLine()) != null) {
 			System.out.println(counter++);
