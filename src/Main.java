@@ -18,7 +18,7 @@ public class Main {
 		String splitted[];
 		int id = 0;
 		boolean duplicate = false;
-		
+		Writer egyszerusitett = new BufferedWriter(new FileWriter("scientist_result.txt", false));
 		//Szotovek felvetel
 		while ((line = br.readLine()) != null) {
 			line = line.toLowerCase();
@@ -75,9 +75,12 @@ public class Main {
 							parsed[i] = simplierWord;
 						}
 					}
+
+					
 					citations.addNode(node);
 					id++;
 				}
+			
 			}
 			
 			//Kapcsolatok kialakitasa
@@ -85,7 +88,11 @@ public class Main {
 				citations.connectNode(citations.getNode(parsed[0]),
 						citations.getNode(parsed[i]));
 			}
-
+			for(int k = 0; k < parsed.length; k++){
+				egyszerusitett.write(parsed[k]);
+				egyszerusitett.write(" ");
+			}
+			egyszerusitett.write("\n");
 		}
 		br.close();
 		
