@@ -2,11 +2,14 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Stack;
 
 
-public class Graph 
+public class Graph implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public Node rootNode;
 	public ArrayList<Node> nodes=new ArrayList<Node>();
 	public int[][] adjMatrix;// ide j�n a szomsz�doss�gi m�trix

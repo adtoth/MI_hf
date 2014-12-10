@@ -1,8 +1,14 @@
 import java.util.ArrayList;
-import java.util.Comparator;
 
-public class Node implements Comparable<Node>
+import java.util.Comparator;
+import java.io.Serializable;
+
+public class Node implements Comparable<Node>, Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public String label;
 	public boolean visited = false;
 	public boolean etymon = false;
