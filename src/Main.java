@@ -137,7 +137,7 @@ public class Main {
 				citations.bfs(output); // Fajlba is kiirjuk
 			}
 		}*/
-		int best = 0;
+		int best = 0; // legnagyobb iShowTo alapú bejárás
 		String bestLabel = null;
 		boolean isUnvisited = true;
 		Writer output = new BufferedWriter(new FileWriter("result.txt", false));
@@ -151,16 +151,28 @@ public class Main {
 				}
 			}
 			
+			if(best == 0){
+				for (int i = 0; i < citations.nodes.size(); i++) {
+					if (citations.nodes.get(i).visited == false) {
+						bestLabel = citations.nodes.get(i).label;
+					}
+				}
+			}
+			
 			citations.setRootNode(citations.getNode(bestLabel));
-			
+			reachedWords.add(citations.getNode(bestLabel));
 			citations.bfs(output);
-			
+			//System.out.println(citations.getNode(bestLabel).label);
+			//System.out.println(citations.getNode(bestLabel).ishowTo.size());
+			//System.in.read();
+			best = 0;
 			for(int i = 0; i < citations.nodes.size(); i++){
 				if(!citations.nodes.get(i).visited){
 					isUnvisited = true;
 				}
 			}
 		}
+		
 
 		//output.close();
 		System.out.println("Graf bejarasa: OK");
