@@ -75,14 +75,14 @@ public class Graph implements Serializable
 	}
 	
 	
-	public void bfs(Writer txt) throws IOException
+	public int bfs() throws IOException
 	{
-		
+		int counter = 0;
 		if(rootNode.visited != true){
 			
 		Queue<Node> q = new LinkedList<Node>(); 
 		q.add(this.rootNode); 
-		printNode(this.rootNode,txt); 
+		//printNode(this.rootNode,txt); 
 		rootNode.visited=true; 
 		while(!q.isEmpty()) 
 		{
@@ -91,20 +91,23 @@ public class Graph implements Serializable
 			while((child=getUnvisitedChildNode(n))!=null)
 			{
 				child.visited=true; 
-				printNode(child,txt);
+				//printNode(child,txt);
 				q.add(child); 
 			}
+			counter++;
 		}
 		
 		//clearNodes();
+		
 		}
+		return counter;
 	}
 	
 
 	
 	
 	//minden pontot bej�ratlanra �ll�tunk
-	private void clearNodes()
+	public void clearNodes()
 	{
 		int i=0;
 		while(i<size)

@@ -12,7 +12,7 @@ public class Main {
 		Graph citations = new Graph();
 		ArrayList<Node> reachedWords = new ArrayList<Node>();
 		ArrayList<String> etymons = new ArrayList<String>();
-		BufferedReader br = new BufferedReader(new FileReader("scientist_result.txt"));
+		BufferedReader br = new BufferedReader(new FileReader("tesztadat.txt"));
 		String line;
 		String parsed[];
 		boolean duplicate = false;
@@ -32,7 +32,7 @@ public class Main {
 		System.out.println("Etymons: OK - levalasztva");
 
 		// Node-ok letrehozasa
-		br = new BufferedReader(new FileReader("scientist_result.txt"));
+		br = new BufferedReader(new FileReader("tesztadat.txt"));
 		int counter = 0;
 		while ((line = br.readLine()) != null) { // beolvassuk a köv sort
 			line = line.toLowerCase(); // kisbetűre alakít
@@ -137,15 +137,18 @@ public class Main {
 				citations.bfs(output); // Fajlba is kiirjuk
 			}
 		}*/
+		ArrayList<Integer> szam = new ArrayList<Integer>();
+		ArrayList<String> label = new ArrayList<String>();
 		int best = 0; // legnagyobb iShowTo alapú bejárás
+		int counter2 = 0;
 		String bestLabel = null;
 		boolean isUnvisited = true;
 		Writer output = new BufferedWriter(new FileWriter("result.txt", false));
-		while (isUnvisited){
-			isUnvisited = false;
+		while (citations.nodes.size() != label.size()){
+			//isUnvisited = false;
 			
 			for(int i = 0; i < citations.nodes.size(); i++){
-				if(citations.nodes.get(i).ishowTo.size() > best && citations.nodes.get(i).visited == false ){
+				if(citations.nodes.get(i).ishowTo.size() > best && !label.contains(citations.nodes.get(i).label)){
 					best = citations.nodes.get(i).ishowTo.size();
 					bestLabel = citations.nodes.get(i).label;
 				}
@@ -153,7 +156,7 @@ public class Main {
 			
 			if(best == 0){
 				for (int i = 0; i < citations.nodes.size(); i++) {
-					if (citations.nodes.get(i).visited == false) {
+					if (!label.contains(citations.nodes.get(i).label)) {
 						bestLabel = citations.nodes.get(i).label;
 					}
 				}
@@ -161,11 +164,30 @@ public class Main {
 			
 			citations.setRootNode(citations.getNode(bestLabel));
 			reachedWords.add(citations.getNode(bestLabel));
-			citations.bfs(output);
-			//System.out.println(citations.getNode(bestLabel).label);
+			szam.add(citations.bfs());
+			citations.clearNodes();
+			label.add(bestLabel);
+			//.out.println(citations.getNode(bestLabel).label);
 			//System.out.println(citations.getNode(bestLabel).ishowTo.size());
 			//System.in.read();
 			best = 0;
+
+		}
+		int biggestGraph = 0;
+		int bestIndex = 0;
+		while (isUnvisited){
+			isUnvisited=false;
+			for(int i = 0; i < szam.size(); i++){
+				if(szam.get(i) > biggestGraph){
+					biggestGraph = szam.get(i);
+					bestIndex = i;
+				}
+			}
+			szam.remove(bestIndex);
+			citations.setRootNode(citations.getNode(label.get(bestIndex)));
+			label.remove(bestIndex);
+			citations.bfs();
+			//System.out.println(counter2++);
 			for(int i = 0; i < citations.nodes.size(); i++){
 				if(!citations.nodes.get(i).visited){
 					isUnvisited = true;
